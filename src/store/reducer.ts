@@ -1,11 +1,12 @@
 import {combineReducers} from 'redux';
 
 import userSlice from '../slices/user';
+import orderSlice from '../slices/order.ts';
 
 // 전체 Reducer를 하나로 합침
 const rootReducer = combineReducers({
   user: userSlice.reducer,
-  // order: orederSlice.reducer,
+  order: orderSlice.reducer,
 });
 
 // RootState 타입으로 리턴(타입에러 X).
