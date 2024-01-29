@@ -3,6 +3,7 @@ import {Provider} from 'react-redux';
 import store from './src/store';
 // import {RootState} from '@reduxjs/toolkit/query'; //❌이거 아님❌
 import AppInner from './AppInner.tsx';
+import {NavigationContainer} from '@react-navigation/native';
 
 export type RootStackParamList = {
   SignIn: undefined;
@@ -13,7 +14,9 @@ function App() {
   // Provider 바깥에서는 useSelector 사용 불가하므로
   return (
     <Provider store={store}>
-      <AppInner />
+      <NavigationContainer>
+        <AppInner />
+      </NavigationContainer>
     </Provider>
   );
 }
