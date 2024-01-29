@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 // store -> root reducer(state) -> userSlice, orderSlice
 // state.user.email
@@ -13,7 +13,7 @@ const initialState = {
   name: '',
   email: '',
   accessToken: '',
-  refreshToken: '',
+  money: 0,
 };
 const userSlice = createSlice({
   name: 'user',
@@ -26,14 +26,15 @@ const userSlice = createSlice({
       state.email = action.payload.email;
       state.name = action.payload.name;
       state.accessToken = action.payload.accessToken;
-      state.refreshToken = action.payload.refreshToken;
     },
     // 단순한 1,2개 데이터 보낼때에는 payload에 그냥 데이터를 보내면 된다.
-    setName(state, action) {
-      state.name = action.payload;
+    setAccessToken(state, action) {
+      state.accessToken = action.payload;
+    },
+    setMoney(state, action: PayloadAction<number>) {
+      state.money = action.payload;
     },
   },
-  // 비동기 action
   extraReducers: builder => {},
 });
 
