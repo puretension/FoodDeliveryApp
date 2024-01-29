@@ -9,12 +9,19 @@ import {
 } from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../App.tsx';
+import Config from 'react-native-config';
+import axios, {AxiosError} from 'axios';
+import {useAppDispatch} from '../store';
+import userSlice from '../slices/user';
+import EncryptedStorage from 'react-native-encrypted-storage';
 
 // 암기해도될듯. 이런식으로 만들고 밑에 navigation 선언,
 // navigation.navigate('SignUp'); 이런식으로 사용
 type SignInScreenProps = NativeStackScreenProps<RootStackParamList, 'SignIn'>;
 
 function SignIn({navigation}: SignInScreenProps) {
+  const dispatch = useAppDispatch();
+  const [loading, setLoading] = useState(false); // 로딩중인지 아닌지
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const emailRef = useRef<TextInput | null>(null); // null 안하면 undefined 에러
@@ -33,16 +40,49 @@ function SignIn({navigation}: SignInScreenProps) {
 
   //react-native-status-bar-height 로 상태바 높이 구함
 
-  const onSubmit = useCallback(() => {
+  const onSubmit = useCallback(async () => {
     if (!email || !email.trim()) {
       Alert.alert('알림', '이메일을 입력해주세요!');
     }
     if (!password || !password.trim()) {
       Alert.alert('알림', '비밀번호를 입력해주세요!');
     } else {
-      Alert.alert('로그인', '로그인 되었습니다!');
+      try {
+        setLoading(true);
+        const response = await axios.post(`${Config.API_URL}/login`, {
+          email,
+          password,
+        });
+        console.log(response.data());
+        Alert.alert('로그인', '로그인 되었습니다!');
+        // 실질적 action을 dispatch하는 부분❕
+        dispatch(
+          userSlice.actions.setUser({
+            email: response.data.data.email,
+            name: response.data.data.name,
+            accessToken: response.data.data.accessToken,
+          }),
+        );
+        // dispatch(userSlice.actions.setName(response.data.data.name));
+        // EncryptedStorage에 refreshToken 저장
+        await EncryptedStorage.setItem(
+          'refreshToken',
+          response.data.data.refreshToken,
+        );
+        // 가져올때
+        // const value = await EncryptedStorage.getItem('refreshToken');
+        // 제거할때
+        // await EncryptedStorage.removeItem('accessToken');
+      } catch (error) {
+        const errorResponse = (error as AxiosError).response;
+        if (errorResponse) {
+          Alert.alert('알림', errorResponse.data.message);
+        }
+      } finally {
+        setLoading(false);
+      }
     }
-  }, [email, password]);
+  }, [loading, dispatch, email, password]);
 
   const toSignUp = useCallback(() => {
     navigation.navigate('SignUp');
