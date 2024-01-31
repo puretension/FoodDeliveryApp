@@ -47,5 +47,7 @@
 	<false/>
 	<key>제로초 라이더스</key>
 	<string>FoodDeliveryApp</string>
+	<key>NMFClientId</key>
+    <string>91hzjuw6wc</string>
 </dict>
 </plist>

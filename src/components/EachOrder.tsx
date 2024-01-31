@@ -15,6 +15,8 @@ import {RootState} from '../store/reducer';
 import Config from 'react-native-config';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {LoggedInParamList} from '../../AppInner';
+import NaverMapView, {Marker, Path} from 'react-native-nmap/index';
+import getDistanceFromLatLonInKm from '../util.ts';
 
 interface Props {
   item: Order;
@@ -41,9 +43,9 @@ function EachOrder({item}: {item: Order}) {
     try {
       setLoading(true);
       await axios.post(
-          `${Config.API_URL}/accept`,
-          {orderId: item.orderId},
-          {headers: {authorization: `Bearer ${accessToken}`}},
+        `${Config.API_URL}/accept`,
+        {orderId: item.orderId},
+        {headers: {authorization: `Bearer ${accessToken}`}},
       );
       dispatch(orderSlice.actions.acceptOrder(item.orderId));
       setLoading(false); //페이지 이동(navigation.navigate()) 전에 해줘!
@@ -92,7 +94,7 @@ function EachOrder({item}: {item: Order}) {
     dispatch(orderSlice.actions.rejectOrder(item.orderId));
   }, [dispatch, item]);
 
-  // const {start, end} = item;
+  const {start, end} = item;
 
   // const onAccept = useCallback(() => {
   //   dispatch(orderSlice.actions.acceptOrder(item.orderId));
@@ -102,34 +104,101 @@ function EachOrder({item}: {item: Order}) {
   // }, [dispatch, item.orderId]);
 
   return (
-      <View key={item.orderId} style={styles.orderContainer}>
-        <Pressable onPress={toggleDetail} style={styles.info}>
-          <Text style={styles.eachInfo}>
-            {item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원
-          </Text>
-          <Text>삼성동</Text>
-          <Text>왕십리동</Text>
-        </Pressable>
-        {detail ? (
-            <View>
-              <View>
-                <Text>네이버맵이 들어갈 장소</Text>
-              </View>
-              <View style={styles.buttonWrapper}>
-                <Pressable
-                    onPress={onAccept}
-                    disabled={loading}
-                    style={styles.acceptButton}>
-                  <Text style={styles.buttonText}>수락</Text>
-                </Pressable>
-                <Pressable onPress={onReject} style={styles.rejectButton}>
-                  <Text style={styles.buttonText}>거절</Text>
-                </Pressable>
-              </View>
-            </View>
-        ) : null}
-      </View>
+    <View style={styles.orderContainer}>
+      <Pressable onPress={toggleDetail} style={styles.info}>
+        <Text style={styles.eachInfo}>
+          {item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원
+        </Text>
+        <Text style={styles.eachInfo}>
+          {getDistanceFromLatLonInKm(
+            start.latitude,
+            start.longitude,
+            end.latitude,
+            end.longitude,
+          ).toFixed(1)}
+          km
+        </Text>
+      </Pressable>
+      {detail && (
+        <View>
+          <View
+            style={{
+              width: Dimensions.get('window').width - 30,
+              height: 200,
+              marginTop: 10,
+            }}>
+            <NaverMapView
+              style={{width: '100%', height: '100%'}}
+              zoomControl={false}
+              center={{
+                zoom: 10,
+                tilt: 50,
+                latitude: (start.latitude + end.latitude) / 2,
+                longitude: (start.longitude + end.longitude) / 2,
+              }}>
+              <Marker
+                coordinate={{
+                  latitude: start.latitude,
+                  longitude: start.longitude,
+                }}
+                pinColor="blue"
+              />
+              <Path
+                coordinates={[
+                  {
+                    latitude: start.latitude,
+                    longitude: start.longitude,
+                  },
+                  {latitude: end.latitude, longitude: end.longitude},
+                ]}
+              />
+              <Marker
+                coordinate={{latitude: end.latitude, longitude: end.longitude}}
+              />
+            </NaverMapView>
+          </View>
+          <View style={styles.buttonWrapper}>
+            <Pressable onPress={onAccept} style={styles.acceptButton}>
+              <Text style={styles.buttonText}>수락</Text>
+            </Pressable>
+            <Pressable onPress={onReject} style={styles.rejectButton}>
+              <Text style={styles.buttonText}>거절</Text>
+            </Pressable>
+          </View>
+        </View>
+      )}
+    </View>
   );
+
+  // return (
+  //     <View key={item.orderId} style={styles.orderContainer}>
+  //       <Pressable onPress={toggleDetail} style={styles.info}>
+  //         <Text style={styles.eachInfo}>
+  //           {item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원
+  //         </Text>
+  //         <Text>삼성동</Text>
+  //         <Text>왕십리동</Text>
+  //       </Pressable>
+  //       {detail ? (
+  //           <View>
+  //             <View>
+  //               <Text>네이버맵이 들어갈 장소</Text>
+  //             </View>
+  //             <View style={styles.buttonWrapper}>
+  //               <Pressable
+  //                   onPress={onAccept}
+  //                   disabled={loading}
+  //                   style={styles.acceptButton}>
+  //                 <Text style={styles.buttonText}>수락</Text>
+  //               </Pressable>
+  //               <Pressable onPress={onReject} style={styles.rejectButton}>
+  //                 <Text style={styles.buttonText}>거절</Text>
+  //               </Pressable>
+  //             </View>
+  //           </View>
+  //       ) : null}
+  //     </View>
+  // );
 }
 
 const styles = StyleSheet.create({
