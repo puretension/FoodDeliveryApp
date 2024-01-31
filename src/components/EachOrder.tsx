@@ -41,9 +41,9 @@ function EachOrder({item}: {item: Order}) {
     try {
       setLoading(true);
       await axios.post(
-        `${Config.API_URL}/accept`,
-        {orderId: item.orderId},
-        {headers: {authorization: `Bearer ${accessToken}`}},
+          `${Config.API_URL}/accept`,
+          {orderId: item.orderId},
+          {headers: {authorization: `Bearer ${accessToken}`}},
       );
       dispatch(orderSlice.actions.acceptOrder(item.orderId));
       setLoading(false); //페이지 이동(navigation.navigate()) 전에 해줘!
@@ -102,33 +102,33 @@ function EachOrder({item}: {item: Order}) {
   // }, [dispatch, item.orderId]);
 
   return (
-    <View key={item.orderId} style={styles.orderContainer}>
-      <Pressable onPress={toggleDetail} style={styles.info}>
-        <Text style={styles.eachInfo}>
-          {item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원
-        </Text>
-        <Text>삼성동</Text>
-        <Text>왕십리동</Text>
-      </Pressable>
-      {detail ? (
-        <View>
-          <View>
-            <Text>네이버맵이 들어갈 장소</Text>
-          </View>
-          <View style={styles.buttonWrapper}>
-            <Pressable
-              onPress={onAccept}
-              disabled={loading}
-              style={styles.acceptButton}>
-              <Text style={styles.buttonText}>수락</Text>
-            </Pressable>
-            <Pressable onPress={onReject} style={styles.rejectButton}>
-              <Text style={styles.buttonText}>거절</Text>
-            </Pressable>
-          </View>
-        </View>
-      ) : null}
-    </View>
+      <View key={item.orderId} style={styles.orderContainer}>
+        <Pressable onPress={toggleDetail} style={styles.info}>
+          <Text style={styles.eachInfo}>
+            {item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원
+          </Text>
+          <Text>삼성동</Text>
+          <Text>왕십리동</Text>
+        </Pressable>
+        {detail ? (
+            <View>
+              <View>
+                <Text>네이버맵이 들어갈 장소</Text>
+              </View>
+              <View style={styles.buttonWrapper}>
+                <Pressable
+                    onPress={onAccept}
+                    disabled={loading}
+                    style={styles.acceptButton}>
+                  <Text style={styles.buttonText}>수락</Text>
+                </Pressable>
+                <Pressable onPress={onReject} style={styles.rejectButton}>
+                  <Text style={styles.buttonText}>거절</Text>
+                </Pressable>
+              </View>
+            </View>
+        ) : null}
+      </View>
   );
 }
 
