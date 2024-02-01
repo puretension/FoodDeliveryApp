@@ -63,6 +63,7 @@ function Complete() {
     return ImagePicker.openCamera({
       includeBase64: true,
       includeExif: true,
+      cropping: true,
       saveToPhotos: true, // 갤러리에 저장(원래는 없는 옵션)
     })
       .then(onResponse)
@@ -93,13 +94,13 @@ function Complete() {
     formData.append('image', image);
     formData.append('orderId', orderId);
     try {
-      await axios.post(`${Config.API_URL}/complete`, formData, {
+      await axios.post(`http://localhost:3105/complete`, formData, {
         headers: {
           authorization: `Bearer ${accessToken}`,
         },
       });
       Alert.alert('알림', '완료처리 되었습니다.');
-      navigation.goBack();
+      navigation.goBack(); // 이미지 초기화 후 이전 페이지로 이동
       navigation.navigate('Settings');
       dispatch(orderSlice.actions.rejectOrder(orderId));
     } catch (error) {
@@ -152,7 +153,7 @@ const styles = StyleSheet.create({
   },
   previewImage: {
     height: Dimensions.get('window').height / 3,
-    resizeMode: 'contain',
+    resizeMode: 'contain', // contain vs cover => contain은 이미지가 잘리지 않고 전체가 보임. cover는 꽉 차게 보임
   },
   buttonWrapper: {flexDirection: 'row', justifyContent: 'center'},
   button: {

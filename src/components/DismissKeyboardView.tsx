@@ -1,11 +1,6 @@
 import React from 'react';
-import {
-  TouchableWithoutFeedback,
-  Keyboard,
-  StyleProp,
-  ViewStyle,
-} from 'react-native';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
+import {TouchableWithoutFeedback, Keyboard} from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'; // 이게 더 좋음
 
 //KeyboardAwareScrollView는 npm i @types/react-native-keyboard-aware-scrollview 후에
 //types폴더에 react-native-keyboard-aware-scrollview.d.ts로 파일명 제작( .d.ts가 포인트!)

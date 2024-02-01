@@ -18,6 +18,8 @@ import {useAppDispatch} from './src/store';
 import Config from 'react-native-config';
 import orderSlice from './src/slices/order';
 import usePermissions from './src/hooks/usePermissions.ts';
+import SplashScreen from 'react-native-splash-screen';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 export type LoggedInParamList = {
   Orders: undefined;
@@ -88,6 +90,8 @@ function AppInner() {
       try {
         const token = await EncryptedStorage.getItem('refreshToken');
         if (!token) {
+          // 토큰이 없을 경우 여기서 SplashScreen을 숨깁니다.
+          SplashScreen.hide();
           return;
         }
         const response = await axios.post(
@@ -112,6 +116,11 @@ function AppInner() {
         if ((error as AxiosError).response?.data.code === 'expired') {
           Alert.alert('알림', '다시 로그인 해주세요.');
         }
+        // 에러가 발생했을 경우에도 SplashScreen을 숨깁니다.
+        SplashScreen.hide();
+      } finally {
+        // 성공, 실패 여부와 상관없이 항상 SplashScreen을 숨깁니다.
+        SplashScreen.hide();
       }
     };
     getTokenAndRefresh();
@@ -194,17 +203,37 @@ function AppInner() {
       <Tab.Screen
         name="Orders"
         component={Orders}
-        options={{title: '오더 목록'}}
+        options={{
+          title: '오더 목록',
+          tabBarIcon: ({color}) => (
+            <FontAwesome5 name="list" size={20} style={{color}} />
+          ),
+          tabBarActiveTintColor: 'blue',
+        }}
       />
       <Tab.Screen
         name="Delivery"
         component={Delivery}
-        options={{title: '내 오더'}}
+        options={{
+          headerShown: false,
+          title: '지도',
+          tabBarIcon: ({color}) => (
+            <FontAwesome5 name="map" size={20} style={{color}} />
+          ),
+          tabBarActiveTintColor: 'blue',
+        }}
       />
       <Tab.Screen
         name="Settings"
         component={Settings}
-        options={{title: '내 정보'}}
+        options={{
+          title: '내 정보',
+          tabBarIcon: ({color}) => (
+            <FontAwesome5 name="user" size={20} style={{color}} />
+          ),
+          tabBarActiveTintColor: 'blue',
+          unmountOnBlur: true,
+        }}
       />
     </Tab.Navigator>
   ) : (
