@@ -17,6 +17,7 @@ import userSlice from './src/slices/user';
 import {useAppDispatch} from './src/store';
 import Config from 'react-native-config';
 import orderSlice from './src/slices/order';
+import usePermissions from './src/hooks/usePermissions.ts';
 
 export type LoggedInParamList = {
   Orders: undefined;
@@ -42,6 +43,8 @@ function AppInner() {
 
   const [socket, disconnect] = useSocket();
 
+  usePermissions();
+
   useEffect(() => {
     //request.use()는 에러났을때와 성공했을때를 나눠서 처리할 수 있음!
     axios.interceptors.request.use(
@@ -61,7 +64,7 @@ function AppInner() {
             const refreshToken = await EncryptedStorage.getItem('refreshToken');
             // token refresh 요청
             const {data} = await axios.post(
-              `${Config.API_URL}/refreshToken`, // token refresh api
+              `http://localhost:3105/refreshToken`, // token refresh api
               {},
               {headers: {authorization: `Bearer ${refreshToken}`}},
             );
@@ -88,7 +91,7 @@ function AppInner() {
           return;
         }
         const response = await axios.post(
-          `${Config.API_URL}/refreshToken`,
+          `http://localhost:3105/refreshToken`,
           {},
           {
             headers: {
@@ -170,7 +173,7 @@ function AppInner() {
             const refreshToken = await EncryptedStorage.getItem('refreshToken');
             // token refresh 요청
             const {data} = await axios.post(
-              `${Config.API_URL}/refreshToken`, // token refresh api
+              `http://localhost:3105/refreshToken`, // token refresh api
               {},
               {headers: {authorization: `Bearer ${refreshToken}`}},
             );
