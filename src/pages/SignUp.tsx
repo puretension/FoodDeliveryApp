@@ -77,7 +77,7 @@ function SignUp({navigation}: SignUpScreenProps) {
     try {
       setLoading(true);
       const response = await axios.post(
-        `${Config.API_URL}/user`,
+        `http://localhost:3105/user`,
         {email, name, password}, // password는 hash화(일방향 암호화)
         {
           headers: {

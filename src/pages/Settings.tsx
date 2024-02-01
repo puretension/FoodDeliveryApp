@@ -17,7 +17,7 @@ function Settings() {
   useEffect(() => {
     async function getMoney() {
       const response = await axios.get<{data: number}>(
-        `${Config.API_URL}/showmethemoney`,
+        `http://localhost:3105/showmethemoney`,
         {
           headers: {authorization: `Bearer ${accessToken}`},
         },
@@ -31,7 +31,7 @@ function Settings() {
   const onLogout = useCallback(async () => {
     try {
       await axios.post(
-        `${Config.API_URL}/logout`,
+        `http://localhost:3105/logout`,
         {},
         {
           headers: {

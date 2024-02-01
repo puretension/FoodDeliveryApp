@@ -43,6 +43,8 @@ function SignIn({navigation}: SignInScreenProps) {
   //react-native-status-bar-height 로 상태바 높이 구함
 
   const onSubmit = useCallback(async () => {
+    console.log(Config.API_URL);
+    console.log('her');
     if (loading) {
       return;
     }
@@ -54,7 +56,7 @@ function SignIn({navigation}: SignInScreenProps) {
     } else {
       try {
         setLoading(true);
-        const response = await axios.post(`${Config.API_URL}/login`, {
+        const response = await axios.post(`http://localhost:3105/login`, {
           email,
           password,
         });

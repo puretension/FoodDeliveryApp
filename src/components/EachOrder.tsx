@@ -43,7 +43,7 @@ function EachOrder({item}: {item: Order}) {
     try {
       setLoading(true);
       await axios.post(
-        `${Config.API_URL}/accept`,
+        `http://localhost:3105/accept`,
         {orderId: item.orderId},
         {headers: {authorization: `Bearer ${accessToken}`}},
       );
