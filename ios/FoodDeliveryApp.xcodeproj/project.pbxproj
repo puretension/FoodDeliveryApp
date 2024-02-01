@@ -43,6 +43,13 @@
 		7C3A4F65B203562506411964 /* Pods-FoodDeliveryApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FoodDeliveryApp.debug.xcconfig"; path = "Target Support Files/Pods-FoodDeliveryApp/Pods-FoodDeliveryApp.debug.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = FoodDeliveryApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B77D82AC8037D3F2D10F52ED /* Pods-FoodDeliveryApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FoodDeliveryApp.release.xcconfig"; path = "Target Support Files/Pods-FoodDeliveryApp/Pods-FoodDeliveryApp.release.xcconfig"; sourceTree = "<group>"; };
+		B7C0C9432B6BB9F600B5EBB9 /* FontAwesome6_Solid.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome6_Solid.ttf; path = ../../android/app/src/main/assets/fonts/FontAwesome6_Solid.ttf; sourceTree = "<group>"; };
+		B7C0C9442B6BB9F600B5EBB9 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome5_Solid.ttf; path = ../../android/app/src/main/assets/fonts/FontAwesome5_Solid.ttf; sourceTree = "<group>"; };
+		B7C0C9452B6BB9F600B5EBB9 /* FontAwesome6_Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome6_Regular.ttf; path = ../../android/app/src/main/assets/fonts/FontAwesome6_Regular.ttf; sourceTree = "<group>"; };
+		B7C0C9462B6BB9F600B5EBB9 /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome.ttf; path = ../../android/app/src/main/assets/fonts/FontAwesome.ttf; sourceTree = "<group>"; };
+		B7C0C9472B6BB9F600B5EBB9 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome5_Regular.ttf; path = ../../android/app/src/main/assets/fonts/FontAwesome5_Regular.ttf; sourceTree = "<group>"; };
+		B7C0C9482B6BB9F600B5EBB9 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome5_Brands.ttf; path = ../../android/app/src/main/assets/fonts/FontAwesome5_Brands.ttf; sourceTree = "<group>"; };
+		B7C0C9492B6BB9F600B5EBB9 /* FontAwesome6_Brands.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome6_Brands.ttf; path = ../../android/app/src/main/assets/fonts/FontAwesome6_Brands.ttf; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -116,6 +123,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				B7C0C9422B6BB9D000B5EBB9 /* Fonts */,
 				13B07FAE1A68108700A75B9A /* FoodDeliveryApp */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* FoodDeliveryAppTests */,
@@ -135,6 +143,20 @@
 				00E356EE1AD99517003FC87E /* FoodDeliveryAppTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		B7C0C9422B6BB9D000B5EBB9 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				B7C0C9462B6BB9F600B5EBB9 /* FontAwesome.ttf */,
+				B7C0C9482B6BB9F600B5EBB9 /* FontAwesome5_Brands.ttf */,
+				B7C0C9472B6BB9F600B5EBB9 /* FontAwesome5_Regular.ttf */,
+				B7C0C9442B6BB9F600B5EBB9 /* FontAwesome5_Solid.ttf */,
+				B7C0C9492B6BB9F600B5EBB9 /* FontAwesome6_Brands.ttf */,
+				B7C0C9452B6BB9F600B5EBB9 /* FontAwesome6_Regular.ttf */,
+				B7C0C9432B6BB9F600B5EBB9 /* FontAwesome6_Solid.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
