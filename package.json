@@ -20,6 +20,7 @@
     "react-native": "0.73.3",
     "react-native-config": "^1.5.1",
     "react-native-encrypted-storage": "^4.0.3",
+    "react-native-fast-image": "^8.6.3",
     "react-native-image-crop-picker": "^0.40.2",
     "react-native-image-resizer": "^1.4.5",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",

@@ -208,7 +208,7 @@ function AppInner() {
           tabBarIcon: ({color}) => (
             <FontAwesome5 name="list" size={20} style={{color}} />
           ),
-          tabBarActiveTintColor: 'blue',
+          tabBarActiveTintColor: 'black',
         }}
       />
       <Tab.Screen
@@ -231,8 +231,8 @@ function AppInner() {
           tabBarIcon: ({color}) => (
             <FontAwesome5 name="user" size={20} style={{color}} />
           ),
-          tabBarActiveTintColor: 'blue',
-          unmountOnBlur: true,
+          tabBarActiveTintColor: 'red',
+          unmountOnBlur: true, // 이거 안하면 다른 탭으로 갔다가 돌아왔을때 리렌더링이 안됨
         }}
       />
     </Tab.Navigator>

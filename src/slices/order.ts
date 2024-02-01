@@ -11,16 +11,19 @@ export interface Order {
     longitude: number;
   };
   price: number;
+  image: string;
+  completedAt: string;
 }
 interface InitialState {
   orders: Order[];
   deliveries: Order[];
+  completes: Order[];
 }
 const initialState: InitialState = {
   orders: [],
   deliveries: [],
+  completes: [],
 };
-
 const orderSlice = createSlice({
   name: 'order',
   initialState,
@@ -31,7 +34,7 @@ const orderSlice = createSlice({
     acceptOrder(state, action: PayloadAction<string>) {
       const index = state.orders.findIndex(v => v.orderId === action.payload);
       if (index > -1) {
-        state.deliveries.push(state.orders[index]);
+        state.deliveries.push(state.orders[index]); // orders에서 삭제하고 deliveries에 추가
         state.orders.splice(index, 1);
       }
     },
@@ -46,6 +49,9 @@ const orderSlice = createSlice({
       if (delivery > -1) {
         state.deliveries.splice(delivery, 1);
       }
+    },
+    setCompletes(state, action) {
+      state.completes = action.payload;
     },
   },
   extraReducers: builder => {},
